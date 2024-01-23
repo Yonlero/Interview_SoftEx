@@ -15,7 +15,7 @@ import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmou
 @Service
 public record ProcessAmountService(AmountDataValidator validator) {
     public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO) {
-        validator.checkNegativeValues(amountDTO);
+        validator.checkFieldsAmount(amountDTO);
         AmountDataOutputDTO output = buildByAmountInput(amountDTO);
         output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));
 
@@ -44,6 +44,15 @@ public record ProcessAmountService(AmountDataValidator validator) {
                 totalWithAdditionsAndDiscounts.set(totalWithAdditionsAndDiscounts.get() + value));
         amountDTO.getDiscountInReal().forEach(discount -> {
             totalWithAdditionsAndDiscounts.set(totalWithAdditionsAndDiscounts.get() - discount);
+        });
+        amountDTO.getAdditionsInPercent().forEach(additionPercent -> {
+            totalWithAdditionsAndDiscounts.set(totalWithAdditionsAndDiscounts.get() +
+                    ((additionPercent / 100) * amountDTO.getTotalWithoutDiscountOrAdditions()));
+        });
+        amountDTO.getDiscountInPercent().forEach(discountPercent -> {
+            totalWithAdditionsAndDiscounts.set(
+                    totalWithAdditionsAndDiscounts.get() -
+                            ((discountPercent / 100) * amountDTO.getTotalWithoutDiscountOrAdditions()));
         });
         return totalWithAdditionsAndDiscounts.get();
     }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmountInput;
@@ -17,15 +17,22 @@ public record ProcessAmountService(AmountDataValidator validator) {
     public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO) {
         validator.checkNegativeValues(amountDTO);
         AmountDataOutputDTO output = buildByAmountInput(amountDTO);
-        Map<String, Double> percentByPeople = new HashMap<>();
+        output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));
 
-        for (Map.Entry<String, List<Double>> input : amountDTO.getMapPeople().entrySet()) {
+        HashMap<String, Double> percentByPeople = new HashMap<>();
+        HashMap<String, Double> totalByPeople = new HashMap<>();
+
+        for (Entry<String, List<Double>> input : amountDTO.getMapPeople().entrySet()) {
             AtomicReference<Double> percent = new AtomicReference<>(0.0);
             input.getValue().forEach(x -> percent.updateAndGet(v -> v + x));
-            percentByPeople.put(input.getKey(), (percent.get() / amountDTO.getTotalWithoutDiscountOrAdditions()) / 100);
+            percentByPeople.put(input.getKey(), (percent.get() * 100) / amountDTO.getTotalWithoutDiscountOrAdditions());
         }
 
-        output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));
+        for (Entry<String, Double> people : percentByPeople.entrySet()) {
+            totalByPeople.put(people.getKey(), (people.getValue() * output.getTotalWithDiscountAndAdditions()) / 100);
+        }
+
+        output.setMapAmountByPeople(totalByPeople);
 
         return output;
     }
@@ -33,8 +40,11 @@ public record ProcessAmountService(AmountDataValidator validator) {
     private Double calculateTotalWithAdditionsAndDiscounts(AmountDataInputDTO amountDTO) {
         AtomicReference<Double> totalWithAdditionsAndDiscounts = new AtomicReference<>(
                 amountDTO.getTotalWithoutDiscountOrAdditions() + amountDTO.getFreight());
-        amountDTO.getAdditions().forEach(value ->
+        amountDTO.getAdditionsInReal().forEach(value ->
                 totalWithAdditionsAndDiscounts.set(totalWithAdditionsAndDiscounts.get() + value));
+        amountDTO.getDiscountInReal().forEach(discount -> {
+            totalWithAdditionsAndDiscounts.set(totalWithAdditionsAndDiscounts.get() - discount);
+        });
         return totalWithAdditionsAndDiscounts.get();
     }
 }

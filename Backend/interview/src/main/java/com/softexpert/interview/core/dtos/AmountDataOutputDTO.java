@@ -14,15 +14,15 @@ import java.util.List;
 public class AmountDataOutputDTO implements IDTO {
     private Double totalWithoutDiscountOrAdditions;
     private Double totalWithDiscountAndAdditions;
-    private List<Double> discount;
-    private List<Double> additions;
+    private List<Double> discountInReal;
+    private List<Double> additionsInReal;
     private Double freight;
     private HashMap<String, Double> mapAmountByPeople;
 
     public static AmountDataOutputDTO buildByAmountInput(AmountDataInputDTO amountDTO) {
         return AmountDataOutputDTO.builder()
-                .additions(amountDTO.getAdditions())
-                .discount(amountDTO.getDiscount())
+                .additionsInReal(amountDTO.getAdditionsInReal())
+                .discountInReal(amountDTO.getDiscountInReal())
                 .freight(amountDTO.getFreight())
                 .totalWithoutDiscountOrAdditions(amountDTO.getTotalWithoutDiscountOrAdditions())
                 .build();

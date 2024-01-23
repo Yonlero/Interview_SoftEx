@@ -16,8 +16,8 @@ import static java.util.Objects.isNull;
 @AllArgsConstructor
 public class AmountDataInputDTO implements IDTO {
     private Double totalWithoutDiscountOrAdditions;
-    private List<Double> discount;
-    private List<Double> additions;
+    private List<Double> discountInReal;
+    private List<Double> additionsInReal;
     private Double freight;
     private HashMap<String, List<Double>> mapPeople;
 

@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.softexpert</groupId>
 	<artifactId>interview</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>interview</name>
+	<version>1.0</version>
+	<name>Interview SoftExpert</name>
 	<description>Software for interview</description>
 	<properties>
 		<java.version>21</java.version>

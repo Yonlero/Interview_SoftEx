@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.Collections.emptyList;
+
 @Component
 public class AmountDataValidator {
 
@@ -50,5 +52,13 @@ public class AmountDataValidator {
     private void checkTotalValueInput(AmountDataInputDTO amountDTO) {
         amountDTO.calculateTotal();
         amountDTO.setFreight(amountDTO.getFreight() != null ? amountDTO.getFreight() : 0.0);
+        amountDTO.setAdditionsInReal(amountDTO.getAdditionsInReal() != null
+                ? amountDTO.getAdditionsInReal() : emptyList());
+        amountDTO.setDiscountInReal(amountDTO.getDiscountInReal() != null
+                ? amountDTO.getDiscountInReal() : emptyList());
+        amountDTO.setAdditionsInPercent(amountDTO.getAdditionsInPercent() != null
+                ? amountDTO.getAdditionsInPercent() : emptyList());
+        amountDTO.setDiscountInPercent(amountDTO.getDiscountInPercent() != null
+                ? amountDTO.getDiscountInPercent() : emptyList());
     }
 }

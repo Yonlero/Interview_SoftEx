@@ -16,6 +16,8 @@ public class AmountDataOutputDTO implements IDTO {
     private Double totalWithDiscountAndAdditions;
     private List<Double> discountInReal;
     private List<Double> additionsInReal;
+    private List<Double> discountInPercent;
+    private List<Double> additionsInPercent;
     private Double freight;
     private HashMap<String, Double> mapAmountByPeople;
 
@@ -23,6 +25,8 @@ public class AmountDataOutputDTO implements IDTO {
         return AmountDataOutputDTO.builder()
                 .additionsInReal(amountDTO.getAdditionsInReal())
                 .discountInReal(amountDTO.getDiscountInReal())
+                .discountInPercent(amountDTO.getDiscountInPercent())
+                .additionsInPercent(amountDTO.getAdditionsInPercent())
                 .freight(amountDTO.getFreight())
                 .totalWithoutDiscountOrAdditions(amountDTO.getTotalWithoutDiscountOrAdditions())
                 .build();

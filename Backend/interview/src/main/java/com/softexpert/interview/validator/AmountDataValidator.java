@@ -49,5 +49,6 @@ public class AmountDataValidator {
 
     private void checkTotalValueInput(AmountDataInputDTO amountDTO) {
         amountDTO.calculateTotal();
+        amountDTO.setFreight(amountDTO.getFreight() != null ? amountDTO.getFreight() : 0.0);
     }
 }

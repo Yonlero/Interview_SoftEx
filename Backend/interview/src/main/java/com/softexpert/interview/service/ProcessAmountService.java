@@ -2,6 +2,7 @@ package com.softexpert.interview.service;
 
 import com.softexpert.interview.core.dtos.AmountDataInputDTO;
 import com.softexpert.interview.core.dtos.AmountDataOutputDTO;
+import com.softexpert.interview.core.enums.PaymentMethodsEnum;
 import com.softexpert.interview.validator.AmountDataValidator;
 import org.springframework.stereotype.Service;
 
@@ -12,15 +13,17 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmountInput;
 
+
 @Service
 public record ProcessAmountService(AmountDataValidator validator) {
-    public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO) {
+    public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO,
+                                                   PaymentMethodsEnum paymentMethodsEnum) {
         validator.checkFieldsAmount(amountDTO);
         AmountDataOutputDTO output = buildByAmountInput(amountDTO);
         output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));
 
         HashMap<String, Double> percentByPeople = new HashMap<>();
-        HashMap<String, Double> totalByPeople = new HashMap<>();
+        HashMap<String, List<Object>> totalByPeople = new HashMap<>();
 
         for (Entry<String, List<Double>> input : amountDTO.getMapPeople().entrySet()) {
             AtomicReference<Double> percent = new AtomicReference<>(0.0);
@@ -29,7 +32,13 @@ public record ProcessAmountService(AmountDataValidator validator) {
         }
 
         for (Entry<String, Double> people : percentByPeople.entrySet()) {
-            totalByPeople.put(people.getKey(), (people.getValue() * output.getTotalWithDiscountAndAdditions()) / 100);
+            Double amount = (people.getValue() * output.getTotalWithDiscountAndAdditions()) / 100;
+            totalByPeople.put(
+                    people.getKey(),
+                    List.of(amount, paymentMethodsEnum.paymentMethodChoose(paymentMethodsEnum).generatePaymentLink(
+                            amount, amountDTO.getReceiver())
+                    )
+            );
         }
 
         output.setMapAmountByPeople(totalByPeople);

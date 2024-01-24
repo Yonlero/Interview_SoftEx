@@ -16,13 +16,13 @@ import static java.util.Objects.isNull;
 @AllArgsConstructor
 public class AmountDataInputDTO implements IDTO {
     private Double totalWithoutDiscountOrAdditions;
+    private Double freight;
+    private String receiver;
     private List<Double> discountInReal;
-        private List<Double> additionsInReal;
+    private List<Double> additionsInReal;
     private List<Double> discountInPercent;
     private List<Double> additionsInPercent;
-    private Double freight;
     private HashMap<String, List<Double>> mapPeople;
-
     public void calculateTotal() {
         if (isNull(this.getTotalWithoutDiscountOrAdditions())) {
             this.setTotalWithoutDiscountOrAdditions(0.0);

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Interview_SoftExpert": {
+    "Interview_SE": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/interview-soft-expert",
+            "outputPath": "dist/interview-se",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -30,6 +30,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -62,10 +63,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Interview_SoftExpert:build:production"
+              "buildTarget": "Interview_SE:build:production"
             },
             "development": {
-              "buildTarget": "Interview_SoftExpert:build:development"
+              "buildTarget": "Interview_SE:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Interview_SoftExpert:build"
+            "buildTarget": "Interview_SE:build"
           }
         },
         "test": {
@@ -90,6 +91,7 @@
               "src/assets"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -99,6 +101,6 @@
     }
   },
   "cli": {
-    "analytics": "57a869b2-328b-4945-8983-1d8e6ecc2287"
+    "analytics": "08754bf6-18f2-47b7-86d2-8fc25280b24e"
   }
 }

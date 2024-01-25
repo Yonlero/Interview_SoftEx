@@ -19,7 +19,7 @@ public class AmountDataOutputDTO implements IDTO {
     private List<Double> discountInPercent;
     private List<Double> additionsInPercent;
     private Double freight;
-    private HashMap<String, List<Object>> mapAmountByPeople;
+    private List<DataPersonValueDTO> mapAmountByPeople;
 
     public static AmountDataOutputDTO buildByAmountInput(AmountDataInputDTO amountDTO) {
         return AmountDataOutputDTO.builder()

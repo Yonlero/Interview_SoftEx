@@ -1,91 +1,182 @@
-<h1>Conta Justa</h1>
-<h2>Bem vindo!</h2>
-<br>
+<div class="m-4">
+  <h1 class="text-neutral-200 text-3xl font-bold">Conta Justa</h1>
+  <h2 class="text-neutral-200 text-lg">Bem vindo!</h2>
+</div>
 
-<div class="mx-auto w-3/5">
-  <form [formGroup]="form" class="w-full">
-    <div class="w-full">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Frete: </mat-label>
-        <input matInput formControlName="freight" type="number" min="0" placeholder="">
-      </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Recebedor: </mat-label>
-        <input matInput formControlName="receiver" type="string" min="0" placeholder="">
-      </mat-form-field>
-    </div>
+<ng-container *ngIf="!response; else responseTemplate">
+  <div class="mx-auto w-3/5">
+    <form [formGroup]="form" class="w-full">
+      <div class="w-full grid grid-cols-5 gap-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Frete: </mat-label>
+          <input
+            matInput
+            formControlName="freight"
+            type="number"
+            min="0"
+            placeholder=""
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-full col-span-4">
+          <mat-label>Recebedor: </mat-label>
+          <input
+            matInput
+            formControlName="receiver"
+            type="string"
+            min="0"
+            placeholder=""
+          />
+        </mat-form-field>
+      </div>
 
-    <div>
-      <ng-container formArrayName="discountInReal">
-        <ng-container *ngFor="let discountForm of discountInReal.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(discountForm)" type="number" min="0" placeholder="Desconto em real">
-          </mat-form-field>
+      <h2 class="text-lg mb-4">Descontos</h2>
+
+      <div class="flex gap-4 items-baseline">
+        <ng-container formArrayName="discountInReal">
+          <ng-container
+            *ngFor="let discountForm of discountInReal.controls; let i = index"
+          >
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [formControl]="$any(discountForm)"
+                min="0"
+                placeholder="Desconto em real"
+              />
+            </mat-form-field>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <button mat-mini-fab (click)="addDiscountInReal()">
-        <mat-icon class="add-course-btn">add</mat-icon>
-      </button>
-    </div>
+        <button mat-mini-fab (click)="addDiscountInReal()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+      </div>
 
-    <div>
-      <ng-container formArrayName="additionsInReal">
-        <ng-container *ngFor="let additionForm of additionsInReal.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(additionForm)" type="number" min="0" placeholder="Adicionais em real">
-          </mat-form-field>
+      <div class="flex gap-4 items-baseline">
+        <ng-container formArrayName="discountInPercent">
+          <ng-container
+            *ngFor="
+              let discountForm of discountInPercent.controls;
+              let i = index
+            "
+          >
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [formControl]="$any(discountForm)"
+                min="0"
+                max="100"
+                placeholder="Desconto em porcentagem"
+              />
+            </mat-form-field>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <button mat-mini-fab (click)="addAdditionsInReal()">
-        <mat-icon class="add-course-btn">add</mat-icon>
-      </button>
-    </div>
+        <button mat-mini-fab (click)="addDiscountInPercent()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+      </div>
 
-    <div>
-      <ng-container formArrayName="discountInPercent">
-        <ng-container *ngFor="let discountForm of discountInPercent.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(discountForm)" type="number" min="0" max="100" placeholder="Desconto em porcentagem">
-          </mat-form-field>
+      <h2 class="text-lg mb-4">Adicionais</h2>
+
+      <div class="flex gap-4 items-baseline">
+        <ng-container formArrayName="additionsInReal">
+          <ng-container
+            *ngFor="let additionForm of additionsInReal.controls; let i = index"
+          >
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [formControl]="$any(additionForm)"
+                min="0"
+                placeholder="Adicionais em real"
+              />
+            </mat-form-field>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <button mat-mini-fab (click)="addDiscountInPercent()">
-        <mat-icon class="add-course-btn">add</mat-icon>
-      </button>
-    </div>
+        <button mat-mini-fab (click)="addAdditionsInReal()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+      </div>
 
-    <div>
-      <ng-container formArrayName="additionsInPercent">
-        <ng-container *ngFor="let additionForm of additionsInPercent.controls; let i = index">
-          <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(additionForm)" type="number" min="0" max="100"
-              placeholder="Adicionais em porcentagem">
-          </mat-form-field>
+      <div class="flex gap-4 items-baseline">
+        <ng-container formArrayName="additionsInPercent">
+          <ng-container
+            *ngFor="
+              let additionForm of additionsInPercent.controls;
+              let i = index
+            "
+          >
+            <mat-form-field appearance="outline">
+              <input
+                matInput
+                [formControl]="$any(additionForm)"
+                min="0"
+                max="100"
+                placeholder="Adicionais em porcentagem"
+              />
+            </mat-form-field>
+          </ng-container>
         </ng-container>
-      </ng-container>
-      <button mat-mini-fab (click)="addAdditionsInPercent()">
-        <mat-icon class="add-course-btn">add</mat-icon>
-      </button>
-    </div>
+        <button mat-mini-fab (click)="addAdditionsInPercent()">
+          <mat-icon class="add-course-btn">add</mat-icon>
+        </button>
+      </div>
 
-    <div *ngFor="let person of mapPeople.controls; let i = index" [formGroup]="$any(person)">
-      <mat-form-field appearance="fill">
-        <input matInput formControlName="name" placeholder="Nome da Pessoa" type="text">
-      </mat-form-field>
-      <div formArrayName="values">
-        <div *ngFor="let valueCtrl of getValues(i).controls; let j=index">
-          <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(valueCtrl)" type="number" min="0"
-              placeholder="Adicionar Valor">
+      <h2 class="text-lg mb-4">Pessoas</h2>
+      <div
+        *ngFor="let person of people.controls; let i = index"
+        [formGroup]="$any(person)"
+      >
+        <div class="flex gap-4 items-center">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome da Pessoa</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              placeholder="Nome da Pessoa"
+              type="text"
+            />
           </mat-form-field>
+          <button
+            mat-stroked-button
+            (click)="addValueToPerson(i)"
+            class="mb-4 whitespace-nowrap"
+          >
+            Adicionar Valor
+          </button>
+        </div>
+        <div formArrayName="values" class="flex gap-4 w-full flex-wrap">
+          <div *ngFor="let valueCtrl of getValues(i).controls; let j = index">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Valor</mat-label>
+              <input
+                matInput
+                [formControl]="$any(valueCtrl)"
+                type="number"
+                min="0"
+                max="100"
+                placeholder="Adicionar Valor"
+              />
+            </mat-form-field>
+          </div>
         </div>
       </div>
-      <button mat-button (click)="addValueToPerson(i)">Adicionar Valor</button>
-    </div>
-    <button mat-button (click)="addPerson()">Adicionar Pessoa</button>
-    <br>
-    <button mat-raised-button color="primary" (click)="sendForm()">Enviar</button>
-  </form>
-</div>
+
+      <button mat-stroked-button (click)="addPerson()" class="mb-4">
+        Adicionar Pessoa
+      </button>
+
+      <br />
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="sendForm()"
+        class="w-full"
+      >
+        Enviar
+      </button>
+    </form>
+  </div>
+</ng-container>
+<ng-template #responseTemplate>
+  <code>{{ this.response }}</code>
+</ng-template>

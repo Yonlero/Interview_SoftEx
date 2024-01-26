@@ -9,23 +9,11 @@
       <div class="w-full grid grid-cols-5 gap-4">
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Frete: </mat-label>
-          <input
-            matInput
-            formControlName="freight"
-            type="number"
-            min="0"
-            placeholder=""
-          />
+          <input matInput formControlName="freight" type="number" min="0" placeholder="" />
         </mat-form-field>
         <mat-form-field appearance="outline" class="w-full col-span-4">
           <mat-label>Recebedor: </mat-label>
-          <input
-            matInput
-            formControlName="receiver"
-            type="string"
-            min="0"
-            placeholder=""
-          />
+          <input matInput formControlName="receiver" type="string" min="0" placeholder="" />
         </mat-form-field>
       </div>
 
@@ -33,16 +21,9 @@
 
       <div class="flex gap-4 items-baseline">
         <ng-container formArrayName="discountInReal">
-          <ng-container
-            *ngFor="let discountForm of discountInReal.controls; let i = index"
-          >
+          <ng-container *ngFor="let discountForm of discountInReal.controls; let i = index">
             <mat-form-field appearance="outline">
-              <input
-                matInput
-                [formControl]="$any(discountForm)"
-                min="0"
-                placeholder="Desconto em real"
-              />
+              <input matInput [formControl]="$any(discountForm)" type="number" min="0" placeholder="Desconto em real" />
             </mat-form-field>
           </ng-container>
         </ng-container>
@@ -53,20 +34,13 @@
 
       <div class="flex gap-4 items-baseline">
         <ng-container formArrayName="discountInPercent">
-          <ng-container
-            *ngFor="
+          <ng-container *ngFor="
               let discountForm of discountInPercent.controls;
               let i = index
-            "
-          >
+            ">
             <mat-form-field appearance="outline">
-              <input
-                matInput
-                [formControl]="$any(discountForm)"
-                min="0"
-                max="100"
-                placeholder="Desconto em porcentagem"
-              />
+              <input matInput [formControl]="$any(discountForm)" type="number" min="0" max="100"
+                placeholder="Desconto em porcentagem" />
             </mat-form-field>
           </ng-container>
         </ng-container>
@@ -79,16 +53,10 @@
 
       <div class="flex gap-4 items-baseline">
         <ng-container formArrayName="additionsInReal">
-          <ng-container
-            *ngFor="let additionForm of additionsInReal.controls; let i = index"
-          >
+          <ng-container *ngFor="let additionForm of additionsInReal.controls; let i = index">
             <mat-form-field appearance="outline">
-              <input
-                matInput
-                [formControl]="$any(additionForm)"
-                min="0"
-                placeholder="Adicionais em real"
-              />
+              <input matInput [formControl]="$any(additionForm)" type="number" min="0"
+                placeholder="Adicionais em real" />
             </mat-form-field>
           </ng-container>
         </ng-container>
@@ -99,20 +67,13 @@
 
       <div class="flex gap-4 items-baseline">
         <ng-container formArrayName="additionsInPercent">
-          <ng-container
-            *ngFor="
+          <ng-container *ngFor="
               let additionForm of additionsInPercent.controls;
               let i = index
-            "
-          >
+            ">
             <mat-form-field appearance="outline">
-              <input
-                matInput
-                [formControl]="$any(additionForm)"
-                min="0"
-                max="100"
-                placeholder="Adicionais em porcentagem"
-              />
+              <input matInput [formControl]="$any(additionForm)" min="0" max="100" type="number"
+                placeholder="Adicionais em porcentagem" />
             </mat-form-field>
           </ng-container>
         </ng-container>
@@ -122,25 +83,13 @@
       </div>
 
       <h2 class="text-lg mb-4">Pessoas</h2>
-      <div
-        *ngFor="let person of people.controls; let i = index"
-        [formGroup]="$any(person)"
-      >
+      <div *ngFor="let person of people.controls; let i = index" [formGroup]="$any(person)">
         <div class="flex gap-4 items-center">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Nome da Pessoa</mat-label>
-            <input
-              matInput
-              formControlName="name"
-              placeholder="Nome da Pessoa"
-              type="text"
-            />
+            <input matInput formControlName="name" placeholder="Nome da Pessoa" type="text" />
           </mat-form-field>
-          <button
-            mat-stroked-button
-            (click)="addValueToPerson(i)"
-            class="mb-4 whitespace-nowrap"
-          >
+          <button mat-stroked-button (click)="addValueToPerson(i)" class="mb-4 whitespace-nowrap">
             Adicionar Valor
           </button>
         </div>
@@ -148,14 +97,8 @@
           <div *ngFor="let valueCtrl of getValues(i).controls; let j = index">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Valor</mat-label>
-              <input
-                matInput
-                [formControl]="$any(valueCtrl)"
-                type="number"
-                min="0"
-                max="100"
-                placeholder="Adicionar Valor"
-              />
+              <input matInput [formControl]="$any(valueCtrl)" type="number" min="0" max="100"
+                placeholder="Adicionar Valor" />
             </mat-form-field>
           </div>
         </div>
@@ -166,17 +109,12 @@
       </button>
 
       <br />
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="sendForm()"
-        class="w-full"
-      >
+      <button mat-raised-button color="primary" (click)="sendForm()" class="w-full">
         Enviar
       </button>
     </form>
   </div>
 </ng-container>
 <ng-template #responseTemplate>
-  <code>{{ this.response }}</code>
+  <code [innerHTML]="response | json"></code>
 </ng-template>

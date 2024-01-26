@@ -1,3 +1,5 @@
+import { DataPersonValueDTO } from "./DataPersonValueDTO.model";
+
 export interface AmountDataOutputDTO {
   totalWithoutDiscountOrAdditions: number;
   totalWithDiscountAndAdditions: number ;
@@ -7,5 +9,5 @@ export interface AmountDataOutputDTO {
   additionsInReal: number[];
   discountInPercent: number[];
   additionsInPercent: number[];
-  mapAmountByPeople: Map<string, any[]>;
+  mapAmountByPeople: DataPersonValueDTO[];
 }

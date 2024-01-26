@@ -21,7 +21,7 @@
       <ng-container formArrayName="discountInReal">
         <ng-container *ngFor="let discountForm of discountInReal.controls; let i = index">
           <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(discountForm)" min="0" placeholder="Desconto em real">
+            <input matInput [formControl]="$any(discountForm)" type="number" min="0" placeholder="Desconto em real">
           </mat-form-field>
         </ng-container>
       </ng-container>
@@ -34,7 +34,7 @@
       <ng-container formArrayName="additionsInReal">
         <ng-container *ngFor="let additionForm of additionsInReal.controls; let i = index">
           <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(additionForm)" min="0" placeholder="Adicionais em real">
+            <input matInput [formControl]="$any(additionForm)" type="number" min="0" placeholder="Adicionais em real">
           </mat-form-field>
         </ng-container>
       </ng-container>
@@ -47,7 +47,7 @@
       <ng-container formArrayName="discountInPercent">
         <ng-container *ngFor="let discountForm of discountInPercent.controls; let i = index">
           <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(discountForm)" min="0" max="100" placeholder="Desconto em porcentagem">
+            <input matInput [formControl]="$any(discountForm)" type="number" min="0" max="100" placeholder="Desconto em porcentagem">
           </mat-form-field>
         </ng-container>
       </ng-container>
@@ -60,7 +60,8 @@
       <ng-container formArrayName="additionsInPercent">
         <ng-container *ngFor="let additionForm of additionsInPercent.controls; let i = index">
           <mat-form-field appearance="fill">
-            <input matInput [formControl]="$any(additionForm)" min="0" max="100" placeholder="Adicionais em porcentagem">
+            <input matInput [formControl]="$any(additionForm)" type="number" min="0" max="100"
+              placeholder="Adicionais em porcentagem">
           </mat-form-field>
         </ng-container>
       </ng-container>
@@ -70,13 +71,18 @@
     </div>
 
     <div *ngFor="let person of mapPeople.controls; let i = index" [formGroup]="$any(person)">
-      <input formControlName="name" placeholder="Nome da Pessoa" type="text">
+      <mat-form-field appearance="fill">
+        <input matInput formControlName="name" placeholder="Nome da Pessoa" type="text">
+      </mat-form-field>
       <div formArrayName="values">
         <div *ngFor="let valueCtrl of getValues(i).controls; let j=index">
-          <input matInput [formControl]="$any(valueCtrl)" type="number" min="0" max="100" placeholder="Adicionar Valor">
+          <mat-form-field appearance="fill">
+            <input matInput [formControl]="$any(valueCtrl)" type="number" min="0"
+              placeholder="Adicionar Valor">
+          </mat-form-field>
+        </div>
       </div>
-    </div>
-    <button mat-button (click)="addValueToPerson(i)">Adicionar Valor</button>
+      <button mat-button (click)="addValueToPerson(i)">Adicionar Valor</button>
     </div>
     <button mat-button (click)="addPerson()">Adicionar Pessoa</button>
     <br>

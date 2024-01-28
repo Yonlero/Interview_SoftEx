@@ -20,6 +20,7 @@ import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmou
 public record ProcessAmountService(AmountDataValidator validator) {
     public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO,
                                                    PaymentMethodsEnum paymentMethodsEnum) {
+        amountDTO.validateInputAmunt();
         validator.checkFieldsAmount(amountDTO);
         AmountDataOutputDTO output = buildByAmountInput(amountDTO);
         output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));

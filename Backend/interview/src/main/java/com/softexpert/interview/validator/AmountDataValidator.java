@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -14,7 +13,6 @@ import static java.util.Objects.isNull;
 public class AmountDataValidator {
 
     public void checkFieldsAmount(AmountDataInputDTO amountDTO) {
-        checkTotalValueInput(amountDTO);
         checkNegativeValuesInPercent(amountDTO);
         for (Map.Entry<String, List<Double>> input : amountDTO.getMapPeople().entrySet()) {
             input.getValue().forEach(value -> {
@@ -59,22 +57,5 @@ public class AmountDataValidator {
                 throw new IntegratedException("O valor no campo de descontos em porcentagens não é valido");
             }
         });
-    }
-
-    private void checkTotalValueInput(AmountDataInputDTO amountDTO) {
-        amountDTO.calculateTotal();
-        amountDTO.setFreight(amountDTO.getFreight() != null ? amountDTO.getFreight() : 0.0);
-        amountDTO.setAdditionsInReal(checkListNullElements(amountDTO.getAdditionsInReal()));
-        amountDTO.setDiscountInReal(checkListNullElements(amountDTO.getDiscountInReal()));
-        amountDTO.setAdditionsInPercent(checkListNullElements(amountDTO.getAdditionsInPercent()));
-        amountDTO.setDiscountInPercent(checkListNullElements(amountDTO.getDiscountInReal()));
-    }
-
-    private List<Double> checkListNullElements(List<Double> list) {
-        if (isNull(list))
-            return List.of();
-        if (list.stream().allMatch(Objects::isNull))
-            return List.of();
-        return list;
     }
 }

@@ -46,7 +46,7 @@ public class AmountDataInputDTO implements IDTO {
         amountDTO.setAdditionsInReal(checkListNullElements(amountDTO.getAdditionsInReal()));
         amountDTO.setDiscountInReal(checkListNullElements(amountDTO.getDiscountInReal()));
         amountDTO.setAdditionsInPercent(checkListNullElements(amountDTO.getAdditionsInPercent()));
-        amountDTO.setDiscountInPercent(checkListNullElements(amountDTO.getDiscountInReal()));
+        amountDTO.setDiscountInPercent(checkListNullElements(amountDTO.getDiscountInPercent()));
     }
 
     private List<Double> checkListNullElements(List<Double> list) {

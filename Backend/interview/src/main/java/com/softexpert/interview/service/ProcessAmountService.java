@@ -7,6 +7,7 @@ import com.softexpert.interview.core.enums.PaymentMethodsEnum;
 import com.softexpert.interview.validator.AmountDataValidator;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmou
 
 @Service
 public record ProcessAmountService(AmountDataValidator validator) {
+
     public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO,
                                                    PaymentMethodsEnum paymentMethodsEnum) {
         amountDTO.validateInputAmunt();
@@ -39,7 +41,7 @@ public record ProcessAmountService(AmountDataValidator validator) {
             dataPersonDTO.add(
                     DataPersonValueDTO.builder()
                             .personName(people.getKey())
-                            .value(amount)
+                            .value(Double.valueOf(new DecimalFormat("#.##").format(amount)))
                             .paymentLink(
                                     paymentMethodsEnum.paymentMethodChoose(paymentMethodsEnum).generatePaymentLink(
                                             amount, amountDTO.getReceiver())

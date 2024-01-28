@@ -18,7 +18,7 @@ The application will be working in this URL (http://localhost:8080)
 
 - POST - http://localhost:8080/api/v1/process ( Send information to calculate )
 
-# Endpoint Fronend
+# Endpoint Frontend
 
 - GET - http://localhost:4200
 

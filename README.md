@@ -20,7 +20,7 @@ The application will be working in this URL (http://localhost:8080)
 
 # Endpoint Fronend
 
-- GET - http://localhost:8080
+- GET - http://localhost:4200
 
 # Swagger Documentation Endpoint
 

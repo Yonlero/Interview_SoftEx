@@ -1,2 +1,10 @@
 server:
   port: 8080
+springdoc:
+  api-docs:
+    path: /softex/api-docs
+  swagger-ui:
+    path: /softex/swagger-ui
+spring:
+  profiles:
+    default: local-dev

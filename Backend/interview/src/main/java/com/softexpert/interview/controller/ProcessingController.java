@@ -15,6 +15,7 @@ public class ProcessingController {
     private final ProcessAmountService service;
 
     @PostMapping("/process")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<AmountDataOutputDTO> processAmount(@RequestBody AmountDataInputDTO amountDTO,
                                                              @RequestParam String paymentMethod) {
         AmountDataOutputDTO outputDTO = service.processAmountValues(amountDTO,

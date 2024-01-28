@@ -2,10 +2,12 @@ package com.softexpert.interview.service;
 
 import com.softexpert.interview.core.dtos.AmountDataInputDTO;
 import com.softexpert.interview.core.dtos.AmountDataOutputDTO;
+import com.softexpert.interview.core.dtos.DataPersonValueDTO;
 import com.softexpert.interview.core.enums.PaymentMethodsEnum;
 import com.softexpert.interview.validator.AmountDataValidator;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
@@ -18,12 +20,13 @@ import static com.softexpert.interview.core.dtos.AmountDataOutputDTO.buildByAmou
 public record ProcessAmountService(AmountDataValidator validator) {
     public AmountDataOutputDTO processAmountValues(AmountDataInputDTO amountDTO,
                                                    PaymentMethodsEnum paymentMethodsEnum) {
+        amountDTO.validateInputAmunt();
         validator.checkFieldsAmount(amountDTO);
         AmountDataOutputDTO output = buildByAmountInput(amountDTO);
         output.setTotalWithDiscountAndAdditions(calculateTotalWithAdditionsAndDiscounts(amountDTO));
 
         HashMap<String, Double> percentByPeople = new HashMap<>();
-        HashMap<String, List<Object>> totalByPeople = new HashMap<>();
+        List<DataPersonValueDTO> dataPersonDTO = new ArrayList<>();
 
         for (Entry<String, List<Double>> input : amountDTO.getMapPeople().entrySet()) {
             AtomicReference<Double> percent = new AtomicReference<>(0.0);
@@ -33,15 +36,18 @@ public record ProcessAmountService(AmountDataValidator validator) {
 
         for (Entry<String, Double> people : percentByPeople.entrySet()) {
             Double amount = (people.getValue() * output.getTotalWithDiscountAndAdditions()) / 100;
-            totalByPeople.put(
-                    people.getKey(),
-                    List.of(amount, paymentMethodsEnum.paymentMethodChoose(paymentMethodsEnum).generatePaymentLink(
-                            amount, amountDTO.getReceiver())
-                    )
-            );
+            dataPersonDTO.add(
+                    DataPersonValueDTO.builder()
+                            .personName(people.getKey())
+                            .value(amount)
+                            .paymentLink(
+                                    paymentMethodsEnum.paymentMethodChoose(paymentMethodsEnum).generatePaymentLink(
+                                            amount, amountDTO.getReceiver())
+                            )
+                            .build());
         }
 
-        output.setMapAmountByPeople(totalByPeople);
+        output.setMapAmountByPeople(dataPersonDTO);
 
         return output;
     }

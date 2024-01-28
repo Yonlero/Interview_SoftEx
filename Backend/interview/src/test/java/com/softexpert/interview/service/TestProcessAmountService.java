@@ -13,7 +13,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,8 +46,14 @@ class TestProcessAmountService {
     void processAmountValuesSimpleTest() {
         AmountDataOutputDTO dto = service.processAmountValues(amount, PaymentMethodsEnum.valueOf("PICPAY"));
         assertThat(dto).isNotNull();
-        assertThat(dto.getMapAmountByPeople().get("Test_1")).isEqualTo(List.of(31.92, "https://picpay.me/null/31.92"));
-        assertThat(dto.getMapAmountByPeople().get("Test_2")).isEqualTo(List.of(6.08, "https://picpay.me/null/6.08"));
+
+        assertThat(dto.getMapAmountByPeople().get(0).getPersonName()).isEqualTo("Test_1");
+        assertThat(dto.getMapAmountByPeople().get(0).getValue()).isEqualTo(31.92);
+        assertThat(dto.getMapAmountByPeople().get(0).getPaymentLink()).isEqualTo("https://picpay.me/null/31.92");
+
+        assertThat(dto.getMapAmountByPeople().get(1).getPersonName()).isEqualTo("Test_2");
+        assertThat(dto.getMapAmountByPeople().get(1).getValue()).isEqualTo(6.08);
+        assertThat(dto.getMapAmountByPeople().get(1).getPaymentLink()).isEqualTo("https://picpay.me/null/6.08");
     }
 
     @Test
@@ -56,8 +61,13 @@ class TestProcessAmountService {
         amount.setAdditionsInReal(List.of(10.0));
         AmountDataOutputDTO dto = service.processAmountValues(amount, PaymentMethodsEnum.valueOf("PICPAY"));
         assertThat(dto).isNotNull();
-        assertThat(dto.getMapAmountByPeople().get("Test_1")).isEqualTo(List.of(40.32, "https://picpay.me/null/40.32"));
-        assertThat(dto.getMapAmountByPeople().get("Test_2")).isEqualTo(List.of(7.68, "https://picpay.me/null/7.68"));
+        assertThat(dto.getMapAmountByPeople().get(0).getPersonName()).isEqualTo("Test_1");
+        assertThat(dto.getMapAmountByPeople().get(0).getValue()).isEqualTo(40.32);
+        assertThat(dto.getMapAmountByPeople().get(0).getPaymentLink()).isEqualTo("https://picpay.me/null/40.32");
+
+        assertThat(dto.getMapAmountByPeople().get(1).getPersonName()).isEqualTo("Test_2");
+        assertThat(dto.getMapAmountByPeople().get(1).getValue()).isEqualTo(7.68);
+        assertThat(dto.getMapAmountByPeople().get(1).getPaymentLink()).isEqualTo("https://picpay.me/null/7.68");
     }
 
     @Test
@@ -65,8 +75,13 @@ class TestProcessAmountService {
         amount.setAdditionsInPercent(List.of(10.0));
         AmountDataOutputDTO dto = service.processAmountValues(amount, PaymentMethodsEnum.valueOf("PICPAY"));
         assertThat(dto).isNotNull();
-        assertThat(dto.getMapAmountByPeople().get("Test_1")).isEqualTo(List.of(36.12, "https://picpay.me/null/36.12"));
-        assertThat(dto.getMapAmountByPeople().get("Test_2")).isEqualTo(List.of(6.88, "https://picpay.me/null/6.88"));
+        assertThat(dto.getMapAmountByPeople().get(0).getPersonName()).isEqualTo("Test_1");
+        assertThat(dto.getMapAmountByPeople().get(0).getValue()).isEqualTo(36.12);
+        assertThat(dto.getMapAmountByPeople().get(0).getPaymentLink()).isEqualTo("https://picpay.me/null/36.12");
+
+        assertThat(dto.getMapAmountByPeople().get(1).getPersonName()).isEqualTo("Test_2");
+        assertThat(dto.getMapAmountByPeople().get(1).getValue()).isEqualTo(6.88);
+        assertThat(dto.getMapAmountByPeople().get(1).getPaymentLink()).isEqualTo("https://picpay.me/null/6.88");
     }
 
     @Test
@@ -74,7 +89,12 @@ class TestProcessAmountService {
         amount.setDiscountInPercent(List.of(10.0));
         AmountDataOutputDTO dto = service.processAmountValues(amount, PaymentMethodsEnum.valueOf("PICPAY"));
         assertThat(dto).isNotNull();
-        assertThat(dto.getMapAmountByPeople().get("Test_1")).isEqualTo(List.of(27.72, "https://picpay.me/null/27.72"));
-        assertThat(dto.getMapAmountByPeople().get("Test_2")).isEqualTo(List.of(5.28, "https://picpay.me/null/5.28"));
+        assertThat(dto.getMapAmountByPeople().get(0).getPersonName()).isEqualTo("Test_1");
+        assertThat(dto.getMapAmountByPeople().get(0).getValue()).isEqualTo(27.72);
+        assertThat(dto.getMapAmountByPeople().get(0).getPaymentLink()).isEqualTo("https://picpay.me/null/27.72");
+
+        assertThat(dto.getMapAmountByPeople().get(1).getPersonName()).isEqualTo("Test_2");
+        assertThat(dto.getMapAmountByPeople().get(1).getValue()).isEqualTo(5.28);
+        assertThat(dto.getMapAmountByPeople().get(1).getPaymentLink()).isEqualTo("https://picpay.me/null/5.28");
     }
 }

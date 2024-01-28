@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  background-color: #333;
+  color: white;
+  width: 100%;
+}
+
+.mdc-notched-outline__notch {
+  border-right: none;
+}
